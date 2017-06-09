@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/lukeb-uk/jscad-includify#readme",
   "dependencies": {
-    "minimist": "^1.2.0",
     "recast": "^0.12.4"
+  },
+  "bin": {
+    "jscad-includify": "./cli.js"
   }
 }
