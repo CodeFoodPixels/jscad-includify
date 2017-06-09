@@ -1,0 +1,23 @@
+{
+  "name": "jscad-includify",
+  "version": "1.0.0",
+  "description": "Build the includes for your JSCAD project down into one file",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukeb-uk/jscad-includify.git"
+  },
+  "author": "Luke Bonaccorsi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lukeb-uk/jscad-includify/issues"
+  },
+  "homepage": "https://github.com/lukeb-uk/jscad-includify#readme",
+  "dependencies": {
+    "minimist": "^1.2.0",
+    "recast": "^0.12.4"
+  }
+}
