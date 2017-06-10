@@ -4,12 +4,10 @@
 
 const includify = require('./index.js');
 
-includify.runFile(process.argv[2], process.argv[3], (err, files, code) => {
-    if (err) {
-        return console.error(err);
-    }
-
+includify.runFile(process.argv[2], process.argv[3]).then(({code}) => {
     if (!process.argv[3]) {
         console.log(code);
     }
+}).catch((err) => {
+    console.error(err.message);
 });
