@@ -67,11 +67,6 @@ module.exports = {
                 code: recast.print(ast).code,
                 includes
             };
-        }).catch((err) => {
-            if (typeof callback !== `undefined`) {
-                return callback(err);
-            }
-            return bluebird.reject(err);
         });
 
         if (typeof callback === `undefined`) {
@@ -80,7 +75,9 @@ module.exports = {
 
         newScript.then(({code, includes}) => {
             callback(null, includes, code)
-        })
+        }).catch((err) => {
+            callback(err);
+        });
     },
 
     runFile: (path, outputPath, callback) => {
