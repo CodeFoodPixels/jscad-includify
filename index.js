@@ -25,7 +25,7 @@ function processScript(script) {
     });
 
     const includePromises = includeNodes.map((p) => {
-        const filePath = `${path.dirname(process.argv[2])}/${p.node.expression.arguments[0].value}`;
+        const filePath = path.join(path.dirname(process.argv[2]), p.node.expression.arguments[0].value);
 
         return fs.readFileAsync(filePath, `utf8`).catch((err) => {
             return bluebird.reject(new Error(`Error when reading ${filePath}. Error given: ${err}`));
