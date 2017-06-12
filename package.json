@@ -22,5 +22,8 @@
   },
   "bin": {
     "jscad-includify": "./cli.js"
+  },
+  "devDependencies": {
+    "tap": "^10.3.3"
   }
 }
