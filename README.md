@@ -36,9 +36,10 @@ $ npm install --save jscad-includify
 
 ### API
 
-#### includify.run(code[, callback])
+#### includify.run(code[, basePath][, callback])
 
 - `code` _string_: String of code you wish to includify
+- `basePath` _string_: Path to use as the base for the includes. Defaults to an empty string
 - `callback` _function_: Function to be excuted when either an error is encountered or execution has completed. The callback is called with these parameters:
     - `error` _error_: If there was an error this will be the error object
     - `includes` _array_: Array of file paths that were included
