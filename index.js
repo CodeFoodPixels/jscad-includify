@@ -52,7 +52,7 @@ function processScript(script) {
     });
 
     return bluebird.all(includePromises).reduce((includes = [], subIncludes) => {
-        return includes.push(...subIncludes);
+        return includes.concat(...subIncludes);
     }).then((includes = []) => {
         return {ast, includes};
     });
