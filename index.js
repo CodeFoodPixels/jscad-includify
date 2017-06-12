@@ -6,7 +6,7 @@ const fs = bluebird.promisifyAll(require(`fs`));
 const path = require(`path`);
 const builders = recast.types.builders;
 
-function processScript(script) {
+function processScript(script, basePath) {
     const includeNodes = [];
     const ast = recast.parse(script);
 
@@ -25,12 +25,12 @@ function processScript(script) {
     });
 
     const includePromises = includeNodes.map((p) => {
-        const filePath = path.join(path.dirname(process.argv[2]), p.node.expression.arguments[0].value);
+        const filePath = path.join(basePath, p.node.expression.arguments[0].value);
 
         return fs.readFileAsync(filePath, `utf8`).catch((err) => {
             return bluebird.reject(new Error(`Error when reading ${filePath}. Error given: ${err}`));
         }).then((file) => {
-            return processScript(file);
+            return processScript(file, basePath);
         }).then(({ast: subAst, includes: subIncludes}) => {
             p.replace(
                 builders.expressionStatement(
@@ -61,8 +61,13 @@ function processScript(script) {
 
 
 module.exports = {
-    run: (script, callback) => {
-        const newScript = processScript(script).then(({ast, includes}) => {
+    run: (script, basePath, callback) => {
+        if (typeof basePath === `function`) {
+            callback = basePath;
+            basePath = ``;
+        }
+
+        const newScript = processScript(script, basePath).then(({ast, includes}) => {
             return {
                 code: recast.print(ast).code,
                 includes
@@ -80,16 +85,16 @@ module.exports = {
         });
     },
 
-    runFile: (path, outputPath, callback) => {
+    runFile: (inputPath, outputPath, callback) => {
         if (typeof outputPath === `function`) {
-            callback = options;
+            callback = outputPath;
             outputPath = undefined;
         }
 
-        const runFilePromise = fs.readFileAsync(path, `utf8`).catch((err) => {
-            return bluebird.reject(new Error(`Error when reading ${path}. Error given: ${err}`));
+        const runFilePromise = fs.readFileAsync(inputPath, `utf8`).catch((err) => {
+            return bluebird.reject(new Error(`Error when reading ${inputPath}. Error given: ${err}`));
         }).then((script) => {
-            return processScript(script);
+            return processScript(script, path.dirname(inputPath));
         }).then(({ast, includes}) => {
             const code = recast.print(ast).code
             if (!outputPath) {
