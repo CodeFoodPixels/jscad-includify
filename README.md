@@ -1,4 +1,4 @@
-# jscad-includify
+# jscad-includify [![Build Status](https://travis-ci.org/lukeb-uk/jscad-includify.svg?branch=master)](https://travis-ci.org/lukeb-uk/jscad-includify)
 Build the includes for your [JSCAD](https://github.com/jscad/OpenJSCAD.org) project down into one file. Helpful for distributing a utility library or a project as a single file.
 
 This module can be used both as a CLI tool and as a node module.
