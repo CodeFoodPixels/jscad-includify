@@ -61,7 +61,7 @@ function processScript(script, basePath) {
 
 
 module.exports = {
-    run: (script, basePath, callback) => {
+    run: (script, basePath = ``, callback) => {
         if (typeof basePath === `function`) {
             callback = basePath;
             basePath = ``;

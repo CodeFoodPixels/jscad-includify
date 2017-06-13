@@ -1,5 +1,5 @@
 module.exports = {
-    includes: [
+    basePathIncludes: [
         `files/include_one.js`,
         `files/include_two.js`,
         `files/subfolder/subfolder_include.js`,
@@ -22,5 +22,11 @@ module.exports = {
 })();
 
 index = true;
-`
+`,
+    includes: [
+        `include_one.js`,
+        `include_two.js`,
+        `subfolder/subfolder_include.js`,
+        `subfolder/nested_folder/nested_include.js`
+    ]
 }
