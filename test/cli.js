@@ -1,7 +1,7 @@
 'use stict';
 
 const tap = require(`tap`);
-const snapshot = require(`./snapshots/index.js`)
+const tapshot = require(`tapshot`);
 const fs = require(`fs`);
 const execa = require(`execa`);
 
@@ -16,7 +16,7 @@ tap.test(`run with no arguments`, (childTest) => {
 tap.test(`run without output file`, (childTest) => {
     process.chdir(__dirname);
     execa(`../cli.js`, ['files/good.js']).then((result) => {
-        childTest.equal(result.stdout, snapshot.code);
+        tapshot(childTest, result.stdout, {name: 'code'});
         childTest.end();
     });
 });
@@ -51,17 +51,8 @@ tap.test(`run with input file and output file`, (childTest) => {
                 throw err;
             }
 
-            childTest.equal(
-                result.stdout,
-                `Successfully built files/good.js to output/good.js.
-
-Files included:
-    files/include_one.js
-    files/include_two.js
-    files/subfolder/subfolder_include.js
-    files/subfolder/nested_folder/nested_include.js`
-);
-            childTest.equal(file, snapshot.code, `Code should be the same`);
+            tapshot(childTest, result.stdout, {name: `successMessage`})
+            tapshot(childTest, file, {name: 'code'});
 
             fs.unlink(`output/good.js`, (err) => {
                 if (err) {

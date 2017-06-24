@@ -1,9 +1,10 @@
 'use stict';
 
 const tap = require(`tap`);
-const includify = require(`../index.js`);
-const snapshot = require(`./snapshots/index.js`)
+const tapshot = require(`tapshot`);
 const fs = require(`fs`);
+
+const includify = require(`../index.js`);
 
 tap.test(`run with basePath and callback`, (childTest) => {
     process.chdir(__dirname);
@@ -18,8 +19,8 @@ tap.test(`run with basePath and callback`, (childTest) => {
                 throw err;
             }
 
-            childTest.same(includes, snapshot.basePathIncludes, `Includes should be the same`);
-            childTest.equal(code, snapshot.code, `Code should be the same`);
+            tapshot(childTest, includes, {name: 'basePathIncludes'});
+            tapshot(childTest, code, {name: 'code'});
             childTest.end();
         });
     });
@@ -54,8 +55,8 @@ tap.test(`run as a promise with basepath`, (childTest) => {
         }
 
         includify.run(file, `files/`).then(({includes, code}) => {
-            childTest.same(includes, snapshot.basePathIncludes, `Includes should be the same`);
-            childTest.equal(code, snapshot.code, `Code should be the same`);
+            tapshot(childTest, includes, {name: 'basePathIncludes'});
+            tapshot(childTest, code, {name: 'code'});
             childTest.end();
         }).catch((err) => {
             throw err;
@@ -98,8 +99,8 @@ tap.test(`run without basePath and with callback`, (childTest) => {
                 throw err;
             }
 
-            childTest.same(includes, snapshot.includes, `Includes should be the same`);
-            childTest.equal(code, snapshot.code, `Code should be the same`);
+            tapshot(childTest, includes, {name: 'includes'});
+            tapshot(childTest, code, {name: 'code'});
             childTest.end();
         });
     });
@@ -114,8 +115,8 @@ tap.test(`run as a promise without basepath`, (childTest) => {
         }
 
         includify.run(file).then(({includes, code}) => {
-            childTest.same(includes, snapshot.includes, `Includes should be the same`);
-            childTest.equal(code, snapshot.code, `Code should be the same`);
+            tapshot(childTest, includes, {name: 'includes'});
+            tapshot(childTest, code, {name: 'code'});
             childTest.end();
         }).catch((err) => {
             throw err;
@@ -131,8 +132,8 @@ tap.test(`runFile with callback without outputPath`, (childTest) => {
             throw err;
         }
 
-        childTest.same(includes, snapshot.basePathIncludes, `Includes should be the same`);
-        childTest.equal(code, snapshot.code, `Code should be the same`);
+        tapshot(childTest, includes, {name: 'basePathIncludes'});
+        tapshot(childTest, code, {name: 'code'});
         childTest.end();
     });
 });
@@ -155,8 +156,8 @@ tap.test(`runFile as a promise without outputPath`, (childTest) => {
     process.chdir(__dirname);
 
     includify.runFile(`files/good.js`).then(({includes, code}) => {
-        childTest.same(includes, snapshot.basePathIncludes, `Includes should be the same`);
-        childTest.equal(code, snapshot.code, `Code should be the same`);
+        tapshot(childTest, includes, {name: 'basePathIncludes'});
+        tapshot(childTest, code, {name: 'code'});
         childTest.end();
     }).catch((err) => {
         throw err;
@@ -190,8 +191,8 @@ tap.test(`runFile with callback and outputPath`, (childTest) => {
                 throw err;
             }
 
-            childTest.same(includes, snapshot.basePathIncludes, `Includes should be the same`);
-            childTest.equal(file, snapshot.code, `Code should be the same`);
+            tapshot(childTest, includes, {name: 'basePathIncludes'});
+            tapshot(childTest, code, {name: 'code'});
 
             fs.unlink(`output/good.js`, (err) => {
                 if (err) {
@@ -228,8 +229,8 @@ tap.test(`runFile as a promise with outputPath`, (childTest) => {
                 throw err;
             }
 
-            childTest.same(includes, snapshot.basePathIncludes, `Includes should be the same`);
-            childTest.equal(file, snapshot.code, `Code should be the same`);
+            tapshot(childTest, includes, {name: 'basePathIncludes'});
+            tapshot(childTest, code, {name: 'code'});
 
             fs.unlink(`output/good.js`, (err) => {
                 if (err) {
