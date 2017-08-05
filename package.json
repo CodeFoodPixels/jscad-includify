@@ -24,7 +24,7 @@
     "jscad-includify": "./cli.js"
   },
   "devDependencies": {
-    "execa": "^0.7.0",
+    "execa": "^0.8.0",
     "tap": "^10.3.3",
     "tapshot": "^1.0.1"
   },
