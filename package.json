@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "execa": "^0.8.0",
-    "tap": "^10.3.3",
+    "tap": "^11.0.0",
     "tapshot": "^2.0.0"
   },
   "engines": {
