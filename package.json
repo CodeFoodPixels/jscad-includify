@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/lukeb-uk/jscad-includify#readme",
   "dependencies": {
-    "bluebird": "^3.5.0",
+    "bluebird": "^3.6.0",
     "recast": "^0.15.0"
   },
   "bin": {
